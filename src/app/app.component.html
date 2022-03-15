@@ -1,0 +1,25 @@
+<h1 class="heading">Angular Form With Dropdown</h1>
+<div class="alert alert-danger" role="alert" *ngIf="errorResponse">
+    {{errorResponse}}
+</div>
+<div class="formContainer">
+    <form>
+        <div class="form-group">
+            <label for="region">Region: </label>
+            <select class="form-control" name="region" (change)="fetchCountry()" [(ngModel)]="selectedRegion">
+             <option  value="-1">Select Region</option>  
+            <option *ngFor="let regionData of regionList" [value]="regionData">{{regionData}}</option>
+    </select>
+        </div>
+        <div class="form-group country-cls">
+            <label for="country">Country:</label>
+            <select class="form-control" name="country" [(ngModel)]="selectedCountry" [disabled]="isDisabled || selectedRegion=='-1'" (change)="fetchConuntryDetails()">
+          <option  value="-1">Select Country</option>   
+          <option *ngFor="let countries of countryList" [value]="countries?.name">{{countries?.name}}</option>
+      </select>
+        </div>
+    </form>
+</div>
+<div>
+    <app-country-details [countryName]="selectedCountry" *ngIf="showDetails && selectedCountry!=='-1'"></app-country-details>
+</div>

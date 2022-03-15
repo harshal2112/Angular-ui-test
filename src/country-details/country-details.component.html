@@ -1,0 +1,23 @@
+<div class="table-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Capital</th>
+                <th scope="col">Population</th>
+                <th scope="col">Currency</th>
+                <th scope="col">Flag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let details of countryDetails">
+                <td scope="row">{{details?.name}}</td>
+                <td scope="row">{{details?.capital}}</td>
+                <td scope="row">{{details?.population}}</td>
+                <td scope="row">{{details?.currencies}}</td>
+                <td scope="row"><img src="{{details?.flag}}" alt="flag" width="35" height="35" /></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
