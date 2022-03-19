@@ -1,0 +1,7 @@
+<div class="form-group">
+    <label for="label">{{label}}:</label>
+    <select class="form-control" name="label" id="label" [disabled]="isDisabled" (change)="getDropdownList($event)">
+         <option  value="-1">{{defaultValue}}</option>  
+         <option *ngFor="let optionData of options" [value]="optionData">{{optionData}}</option>
+    </select>
+</div>

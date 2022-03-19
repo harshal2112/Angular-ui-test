@@ -1,4 +1,4 @@
-export const BASE_URL:string='https://restcountries.com/v2/region/';
+export const BASE_URL:string='https://restcountries.eu/rest/v2/region/';
 export const REGION_LABEL:string="Region";
 export const COUNTRY_LABEL:string= "Country";
 export const DEFAULT_REGION_VALUE:string="Select Region";
