@@ -11,17 +11,20 @@ import { regionEffects } from '../store/effect';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import * as countryReducer from '../store/reducer';
 import { CountryDetailsComponent } from '../country-details/country-details.component';
+import { DropdownListComponent } from '../dropdown-list/dropdown-list.component';
+import { FEATURE_NAME } from '../helper/Constant'
 
 @NgModule({
   declarations: [
      AppComponent ,
-     CountryDetailsComponent
+     CountryDetailsComponent,
+     DropdownListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot({'regionData': countryReducer.regionReducer}),
+    StoreModule.forRoot({[FEATURE_NAME]: countryReducer.regionReducer}),
     EffectsModule.forRoot([regionEffects]),
     StoreDevtoolsModule.instrument({
       logOnly: environment.production,

@@ -21,7 +21,7 @@ export class regionEffects {
     private store: Store<State>
   ) {
   }
-  countryResult:any='';
+  countryResult:string='';
   loadCountries$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(Init),

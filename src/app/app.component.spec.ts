@@ -23,7 +23,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         CommonService,
@@ -34,10 +34,11 @@ describe('AppComponent', () => {
     httpModule = TestBed.inject(HttpTestingController);
     store= TestBed.inject(MockStore);
   });
- 
+  
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
+    app.regionList=[];
     expect(app).toBeTruthy();
   });
 
@@ -47,4 +48,5 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.heading').textContent).toContain('Angular Form With Dropdown');
   });
+ 
 });

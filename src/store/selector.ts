@@ -1,18 +1,23 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { State } from '../model/state'
-import { CountryData } from '../model/state'
+import { CountryData } from '../model/state';
+import {INTIAL_REGION,FEATURE_NAME} from '../helper/Constant'
 
-
-const getRegionState = createFeatureSelector<State>('regionData');
+const getRegionState = createFeatureSelector<State>(FEATURE_NAME);
 export const getRegionList = createSelector(getRegionState, (state) => state.regionList);
-const getRegion = createSelector(getRegionState, (state) => state.region);
- const getEuropeData = createSelector(getRegionState, (state) => state.europeCountryList[0]);
-export const getDisabledState = createSelector(getRegionState, (state) => state.isDisabled);
- const getAsiaData = createSelector(getRegionState, (state) => state.asiaCountryList[0]);
-export const getCountryData = createSelector(getEuropeData, getAsiaData, getRegion, (europeCountry, asiaCountry, region) => {
-    return region ==="Asia" ? asiaCountry:europeCountry;
+export const getDisabledState = createSelector(getRegionState, (state) =>{
+    return state.region==="-1" ? true : state.isDisabled;
 });
-
+export const getCountryData = createSelector(getRegionState, (state) => {
+    return state.region === INTIAL_REGION ? state.asiaCountryList[0]:state.europeCountryList[0];
+});
+export const getCountryList = createSelector(getCountryData,(data=>{
+    let countries:Array<string>=[];
+    for (let key in data) {
+        countries.push(data[key].name)
+    }
+    return  countries;
+}));
 export const getCountryDetails = (countryName: string) =>
     createSelector(
         getCountryData,

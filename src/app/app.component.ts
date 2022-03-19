@@ -1,39 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Init } from '../store/action';
 import { Store } from '@ngrx/store';
 import { State } from '../model/state';
-import { getCountryData, getDisabledState, getError, getRegionList } from '../store/selector'
+import { REGION_LABEL, COUNTRY_LABEL, DEFAULT_REGION_VALUE, DEFAULT_COUNTRY_VALUE } from '../helper/Constant';
+import { getCountryList, getDisabledState, getError, getRegionList } from '../store/selector';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy {
   constructor(private store: Store<State>) { }
-  selectedRegion: string = '-1';
-  selectedCountry: string = '-1';
+  selectedRegion: string = DEFAULT_REGION_VALUE;
+  selectedCountry: string = DEFAULT_COUNTRY_VALUE;
+  regionLabel: string = REGION_LABEL;
+  countryLabel: string = COUNTRY_LABEL;
   isDisabled: boolean = true;
   regionList: Array<string> = []
-  countryList: any = [];
+  countryList: Array<string> = [];
   showDetails: boolean = false;
-  errorResponse: any = '';
+  errorResponse: string = '';
+  countrySubscription: Subscription = new Subscription;
+  disableStateSubscription: Subscription = new Subscription;
+  errorSuscription: Subscription = new Subscription;
+  regionListSubscription: Subscription = new Subscription;
   ngOnInit(): void {
-    this.store.select(getRegionList).subscribe(list=> this.regionList = list);
+    this.regionListSubscription = this.store.select(getRegionList).subscribe(list => this.regionList = list);
   }
-  fetchCountry() {
-    let searchTerm: string = this.selectedRegion;
-    this.store.select(getDisabledState).subscribe(state => this.isDisabled = state);
-    this.store.select(getCountryData).subscribe(data => { this.countryList = data; this.selectedCountry = '-1' })
-    this.store.dispatch(Init({ region: searchTerm }));
-    this.store.select(getError).subscribe(error => { this.errorResponse = error });
-    if (this.selectedRegion === "-1") {
-      this.selectedCountry = '-1';
+  resetCountryData() {
+    this.countryList=[];
+    this.selectedCountry = DEFAULT_COUNTRY_VALUE;
+    this.showDetails = false;
+  }
+  fetchCountry(value: string) {
+    this.disableStateSubscription = this.store.select(getDisabledState).subscribe(state => this.isDisabled = state);
+    this.countrySubscription = this.store.select(getCountryList).subscribe(data => {
+      this.resetCountryData();
+      this.countryList = data; 
+    });
+    this.store.dispatch(Init({ region: value }));
+    this.errorSuscription = this.store.select(getError).subscribe(error => { this.errorResponse = error });
+    if (value === "-1") {
+      this.resetCountryData();
     }
   };
-  fetchConuntryDetails() {
+  fetchConuntryDetails(value: string) {
     this.showDetails = true;
-    return this.selectedCountry;
+    this.selectedCountry = value;
   }
 
+  ngOnDestroy(): void {
+    this.countrySubscription.unsubscribe()
+    this.errorSuscription.unsubscribe();
+    this.disableStateSubscription.unsubscribe();
+    this.regionListSubscription.unsubscribe();
+  }
 }
