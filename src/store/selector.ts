@@ -4,7 +4,7 @@ import { CountryData } from '../model/state';
 import {INTIAL_REGION,FEATURE_NAME} from '../helper/Constant'
 
 const getRegionState = createFeatureSelector<State>(FEATURE_NAME);
-export const getRegionList = createSelector(getRegionState, (state) => state.regionList);
+export const getRegionList = createSelector(getRegionState, (state) => state && state.regionList);
 export const getDisabledState = createSelector(getRegionState, (state) =>{
     return state.region==="-1" ? true : state.isDisabled;
 });
