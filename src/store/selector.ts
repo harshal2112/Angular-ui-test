@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { State } from '../model/state'
 import { CountryData } from '../model/state';
-import {INTIAL_REGION,FEATURE_NAME} from '../helper/Constant'
+import {INITIAL_REGION,FEATURE_NAME} from '../helper/Constant'
 
 const getRegionState = createFeatureSelector<State>(FEATURE_NAME);
 export const getRegionList = createSelector(getRegionState, (state) => state && state.regionList);
@@ -9,7 +9,7 @@ export const getDisabledState = createSelector(getRegionState, (state) =>{
     return state.region==="-1" ? true : state.isDisabled;
 });
 export const getCountryData = createSelector(getRegionState, (state) => {
-    return state.region === INTIAL_REGION ? state.asiaCountryList[0]:state.europeCountryList[0];
+    return state.region === INITIAL_REGION ? state.asiaCountryList[0]:state.europeCountryList[0];
 });
 export const getCountryList = createSelector(getCountryData,(data=>{
     let countries:Array<string>=[];

@@ -14,8 +14,6 @@ describe('CommonServiceService', () => {
         CommonService
       ],
     });
-    service = TestBed.get(CommonService);
-    httpMock = TestBed.get(HttpTestingController);
   });
   afterEach(() => {
     httpMock.verify();

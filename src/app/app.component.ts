@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   errorResponse: string = '';
   countrySubscription: Subscription = new Subscription;
   disableStateSubscription: Subscription = new Subscription;
-  errorSuscription: Subscription = new Subscription;
+  errorSubscription: Subscription = new Subscription;
   regionListSubscription: Subscription = new Subscription;
   ngOnInit(): void {
     this.regionListSubscription = this.store.select(getRegionList).subscribe(list => this.regionList = list);
@@ -41,19 +41,19 @@ export class AppComponent implements OnInit, OnDestroy {
       this.countryList = data; 
     });
     this.store.dispatch(Init({ region: value }));
-    this.errorSuscription = this.store.select(getError).subscribe(error => { this.errorResponse = error });
+    this.errorSubscription = this.store.select(getError).subscribe(error => { this.errorResponse = error });
     if (value === "-1") {
       this.resetCountryData();
     }
   };
-  fetchConuntryDetails(value: string) {
+  fetchCountryDetails(value: string) {
     this.showDetails = true;
     this.selectedCountry = value;
   }
 
   ngOnDestroy(): void {
     this.countrySubscription.unsubscribe()
-    this.errorSuscription.unsubscribe();
+    this.errorSubscription.unsubscribe();
     this.disableStateSubscription.unsubscribe();
     this.regionListSubscription.unsubscribe();
   }

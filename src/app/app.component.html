@@ -6,7 +6,7 @@
     <div class="formContainer">
         <form>
             <app-dropdown-list [defaultValue]="selectedRegion" [options]="regionList" [label]="regionLabel" (countryEvent)="fetchCountry($event)"></app-dropdown-list>
-            <app-dropdown-list [defaultValue]="selectedCountry" [options]="countryList" [label]="countryLabel" [isDisabled]="isDisabled" (countryEvent)="fetchConuntryDetails($event)"></app-dropdown-list>
+            <app-dropdown-list [defaultValue]="selectedCountry" [options]="countryList" [label]="countryLabel" [isDisabled]="isDisabled" (countryEvent)="fetchCountryDetails($event)"></app-dropdown-list>
         </form>
     </div>
     <div>
